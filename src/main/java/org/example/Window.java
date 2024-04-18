@@ -18,10 +18,9 @@ public class Window {
         this.width = weight;
         this.tittle = tittle;
     }
-    public void init(){
-        GLFW.glfwInit();
-    }
+
     public void create(){
+        GLFW.glfwInit();
         input = new Input();
      winndow =    GLFW.glfwCreateWindow(width,heigtt,tittle,0,0);
         GLFWVidMode glfwVidMode = GLFW.glfwGetVideoMode(GLFW.glfwGetPrimaryMonitor());

@@ -11,7 +11,7 @@ import static org.lwjgl.opengl.ARBVertexArrayObject.glGenVertexArrays;
 public class Main {
 
     public Mesh mesh = new Mesh(new Vertex[] {
-            new Vertex(new Vector3f(-0.5f,  0.5f, 0.0f)),
+            new Vertex(new Vector3f(-0.5f,  0.5f, -0.9f)),
             new Vertex(new Vector3f(-0.5f, -0.5f, 0.0f)),
             new Vertex(new Vector3f( 0.5f, -0.5f, 0.0f)),
             new Vertex(new Vector3f( 0.5f,  0.5f, 0.0f))
@@ -19,22 +19,29 @@ public class Main {
             0, 1, 2,
             0, 3, 2
     });
+    public Mesh mesh1 = new Mesh(new Vertex[] {
+            new Vertex(new Vector3f(-0.9f,  0.9f, -0.9f)),
+            new Vertex(new Vector3f(-0.6f, -0.6f, 0.0f)),
+            new Vertex(new Vector3f( -0.7f, -0.9f, 0.0f)),
+            new Vertex(new Vector3f( -0.5f,  -0.5f, 0.0f))
+    }, new int[] {
+            0, 1, 2,
+            0, 3, 2
+    });
     public Renderer renderer ;
     Window window = new Window(800,800,"DUPA");
-    private void render() {
-        renderer.renderMesh(mesh);
-        window.swapBuffer();
-    }
+
 public void run(){
     renderer = new Renderer();
-    window.init();
-    window.create();
-    window.setBackgorung(0,1,0
+    window.setBackgorung(1,0,0
     );
+    window.create();
+    mesh.create();
+    mesh1.create();
+
     while (!window.Close()){
         window.update();
         render();
-        window.swapBuffer();
 
         if(Input.isKeyDown(GLFW_KEY_ENTER)){
             System.out.println("tak");
@@ -45,7 +52,12 @@ public void run(){
 
     }
 }
+    private void render() {
+        renderer.renderMesh(mesh);
+        renderer.renderMesh(mesh1);
+        window.swapBuffer();
 
+    }
     public static void main(String[] args) {
         new Main().run();
     }
