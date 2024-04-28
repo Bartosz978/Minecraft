@@ -29,7 +29,7 @@ public class Main {
             0, 3, 2
     });
     public Renderer renderer ;
-    Window window = new Window(800,800,"DUPA");
+    Window window = new Window(800,800,"Nasza gra");
 
 public void run(){
     renderer = new Renderer();
