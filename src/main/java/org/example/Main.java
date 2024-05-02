@@ -31,27 +31,27 @@ public class Main {
     public Renderer renderer ;
     Window window = new Window(800,800,"DUPA");
 
-public void run(){
-    renderer = new Renderer();
-    window.setBackgorung(1,0,0
-    );
-    window.create();
-    mesh.create();
-    mesh1.create();
+    public void run(){
+        renderer = new Renderer();
+        window.setBackgorung(1,0,0
+        );
+        window.create();
+        mesh.create();
+        mesh1.create();
 
-    while (!window.Close()){
-        window.update();
-        render();
+        while (!window.Close()){
+            window.update();
+            render();
 
-        if(Input.isKeyDown(GLFW_KEY_ENTER)){
-            System.out.println("tak");
+            if(Input.isKeyDown(GLFW_KEY_ENTER)){
+                System.out.println("tak");
+            }
+            if(Input.isKeyDown(GLFW_KEY_ESCAPE))
+                return;
+
+
         }
-        if(Input.isKeyDown(GLFW_KEY_ESCAPE))
-            return;
-
-
     }
-}
     private void render() {
         renderer.renderMesh(mesh);
         renderer.renderMesh(mesh1);

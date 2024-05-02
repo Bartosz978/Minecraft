@@ -47,6 +47,10 @@ public class Mesh {
         GL15.glBindBuffer(GL15.GL_ELEMENT_ARRAY_BUFFER, 0);
     }
 
+    public void remowe(){
+
+    }
+
     public Vertex[] getVertices() {
         return vertices;
     }

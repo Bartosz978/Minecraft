@@ -61,6 +61,7 @@ dependencies {
     implementation("org.lwjgl", "lwjgl-xxhash")
     implementation("org.lwjgl", "lwjgl-yoga")
     implementation("org.lwjgl", "lwjgl-zstd")
+    implementation (files("C:\\Users\\Q\\Desktop\\Minecrft\\Minecrft\\libs"))
     runtimeOnly("org.lwjgl", "lwjgl", classifier = lwjglNatives)
     runtimeOnly("org.lwjgl", "lwjgl-assimp", classifier = lwjglNatives)
     runtimeOnly("org.lwjgl", "lwjgl-bgfx", classifier = lwjglNatives)
