@@ -12,7 +12,7 @@ import org.lwjgl.system.MemoryUtil;
 public class Mesh {
     private Vertex[] vertices;
     private int[] indices;
-    private int vao, pbo, ibo;
+    private int vao, pbo, ibo, tbo;
 
     public Mesh(Vertex[] vertices, int[] indices) {
         this.vertices = vertices;
@@ -37,6 +37,16 @@ public class Mesh {
         GL15.glBufferData(GL15.GL_ARRAY_BUFFER, positionBuffer, GL15.GL_STATIC_DRAW);
         GL20.glVertexAttribPointer(0, 3, GL11.GL_FLOAT, false, 0, 0);
         GL15.glBindBuffer(GL15.GL_ARRAY_BUFFER, 0);
+
+        FloatBuffer TextureBuffor = MemoryUtil.memAllocFloat(vertices.length * 2);
+        float[] textureData = new float[vertices.length * 2];
+        for (int i = 0; i < vertices.length; i++) {
+            textureData[i * 2] = vertices[i].getPosition().getX();
+            textureData[i * 2 + 1] = vertices[i].getPosition().getY();
+            
+        }
+        TextureBuffor.put(textureData).flip();
+       // tbo = storeData(TextureBuffor,2,2);
 
         IntBuffer indicesBuffer = MemoryUtil.memAllocInt(indices.length);
         indicesBuffer.put(indices).flip();
