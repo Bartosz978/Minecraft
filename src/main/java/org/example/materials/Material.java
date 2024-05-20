@@ -1,43 +1,39 @@
 package org.example.materials;
-
-
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL13;
 import org.newdawn.slick.opengl.Texture;
 import org.newdawn.slick.opengl.TextureLoader;
 
-<<<<<<< HEAD
-=======
+import java.io.FileInputStream;
 import java.io.IOException;
->>>>>>> 9a9917782dabc99c787fbb4acdf55f6a177255c3
+import org.newdawn.slick.opengl.Texture;
+
+
+
 
 public class Material {
+    private String path;
     private Texture texture;
-    private float width,height;
-    private int TextureID;
+    private float width, height;
+    private int textureID;
 
-    public Material(String File) {
-        try{
-<<<<<<< HEAD
-        texture =TextureLoader.getTexture(File.split("[.]")[1],Material.class.getResourceAsStream(File), GL11.GL_LINEAR);
-        }catch (Exception e){
-=======
-            texture = TextureLoader.getTexture(File.split("[.]")[1],Material.class.getResourceAsStream(File), GL11.GL_LINEAR);
-        }catch (IOException e){
->>>>>>> 9a9917782dabc99c787fbb4acdf55f6a177255c3
-            e.getMessage();
+    public Material(String path) {
+        this.path = path;
+    }
+
+    public void create() {
+        try {
+            texture = TextureLoader.getTexture(path.split("[.]")[1], new FileInputStream(path), GL11.GL_NEAREST);
+            width = texture.getWidth();
+            height = texture.getHeight();
+            textureID = texture.getTextureID();
+        } catch (IOException e) {
+            System.err.println("Can't find texture at " + path);
         }
-
-
     }
-    public void create(){
-        width = texture.getWidth();
-        height = texture.getHeight();
-        TextureID = texture.getTextureID();
 
-    }
-    public void destroy(){
-        GL13.glDeleteTextures(TextureID);
+    public void destroy() {
+        GL13.glDeleteTextures(textureID);
     }
 
     public float getWidth() {
@@ -49,6 +45,6 @@ public class Material {
     }
 
     public int getTextureID() {
-        return TextureID;
+        return textureID;
     }
 }
