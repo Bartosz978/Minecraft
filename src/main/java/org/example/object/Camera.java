@@ -1,13 +1,18 @@
 package org.example.object;
 
-import org.example.Input;
+import org.example.IO.Input;
+
+import org.example.generate.Colison;
+import org.example.generate.Generate_World;
 import org.example.math.Vector3f;
 import org.lwjgl.glfw.GLFW;
 
+import java.util.HashMap;
+
 public class Camera {
     private Vector3f position, rotation;
-    private float moveSpeed = 0.05f, mouseSensitivity = 0.15f, distance = 2.0f, horizontalAngle = 0, verticalAngle = 0;
-    private double oldMouseX = 0, oldMouseY = 0, newMouseX, newMouseY;
+    private float moveSpeed = 0.02f, mouseSensitivity = 0.15f, distance = 2.0f, horizontalAngle = 0, verticalAngle = 0;
+    public   static double oldMouseX = 0, oldMouseY = 0, newMouseX, newMouseY;
 
     public Camera(Vector3f position, Vector3f rotation) {
         this.position = position;
@@ -21,12 +26,55 @@ public class Camera {
         float x = (float) Math.sin(Math.toRadians(rotation.getY())) * moveSpeed;
         float z = (float) Math.cos(Math.toRadians(rotation.getY())) * moveSpeed;
 
-        if (Input.isKeyDown(GLFW.GLFW_KEY_A)) position = Vector3f.add(position, new Vector3f(-z, 0, x));
-        if (Input.isKeyDown(GLFW.GLFW_KEY_D)) position = Vector3f.add(position, new Vector3f(z, 0, -x));
-        if (Input.isKeyDown(GLFW.GLFW_KEY_W)) position = Vector3f.add(position, new Vector3f(-x, 0, -z));
-        if (Input.isKeyDown(GLFW.GLFW_KEY_S)) position = Vector3f.add(position, new Vector3f(x, 0, z));
-        if (Input.isKeyDown(GLFW.GLFW_KEY_SPACE)) position = Vector3f.add(position, new Vector3f(0, moveSpeed, 0));
-        if (Input.isKeyDown(GLFW.GLFW_KEY_LEFT_SHIFT)) position = Vector3f.add(position, new Vector3f(0, -moveSpeed, 0));
+        if (Input.isKeyDown(GLFW.GLFW_KEY_A)){
+            Vector3f newposition = new Vector3f(position.getX()-z,position.getZ(),position.getX());
+            if(Colison.changeCollision(newposition)){
+                position = Vector3f.add(position, new Vector3f(-z, 0, x));
+
+            }
+
+        }
+        if (Input.isKeyDown(GLFW.GLFW_KEY_D)){
+            Vector3f newposition = new Vector3f(position.getX()+z,position.getY(),position.getZ()-x);
+            if(Colison.changeCollision(newposition)){
+                position = Vector3f.add(position, new Vector3f(z, 0, -x));
+            }
+
+
+        }
+        if (Input.isKeyDown(GLFW.GLFW_KEY_W)){
+            Vector3f newposition = new Vector3f(position.getX()-x,position.getY(),position.getZ()-z);
+            if(Colison.changeCollision(newposition)){
+                position = Vector3f.add(position, new Vector3f(-x, 0, -z));
+            }
+
+
+        }
+        if (Input.isKeyDown(GLFW.GLFW_KEY_S)){
+            Vector3f newposition = new Vector3f(position.getX()+x,position.getY(),position.getZ()+z);
+            if(Colison.changeCollision(newposition)){
+                position = Vector3f.add(position, new Vector3f(x, 0, z));
+
+            }
+
+        }
+        if (Input.isKeyDown(GLFW.GLFW_KEY_SPACE)){
+            Vector3f newposition = new Vector3f(position.getX(),position.getY()+moveSpeed,position.getZ());
+            if(Colison.changeCollision(newposition)){
+                position = Vector3f.add(position, new Vector3f(0, moveSpeed, 0));
+            }
+
+
+
+        }
+        if (Input.isKeyDown(GLFW.GLFW_KEY_LEFT_SHIFT)){
+            Vector3f newposition = new Vector3f(position.getX(),position.getY()-moveSpeed,position.getZ());
+            if(Colison.changeCollision(newposition)){
+                position = Vector3f.add(position, new Vector3f(0, -moveSpeed, 0));
+            }
+
+        }
+
 
         float dx = (float) (newMouseX - oldMouseX);
         float dy = (float) (newMouseY - oldMouseY);
@@ -36,7 +84,11 @@ public class Camera {
         oldMouseX = newMouseX;
         oldMouseY = newMouseY;
     }
-
+    boolean isBlock(Vector3f vector3f){
+       Vector3f bloskColison = new Vector3f(vector3f.getX(),vector3f.getY(),vector3f.getZ());
+       HashMap<Integer, HashMap<Integer, GameObject>> D2hash = Generate_World.flat_WordX.get(bloskColison.getX());
+       return false;
+        }
     public void update(GameObject object) {
         newMouseX = Input.getMouseX();
         newMouseY = Input.getMouseY();
@@ -69,6 +121,8 @@ public class Camera {
         oldMouseX = newMouseX;
         oldMouseY = newMouseY;
     }
+
+
 
 
     public Vector3f getPosition() {
