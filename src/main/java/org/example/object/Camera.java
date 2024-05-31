@@ -2,6 +2,8 @@ package org.example.object;
 
 import org.example.IO.Input;
 
+import org.example.IO.NPC;
+import org.example.Main;
 import org.example.generate.Colison;
 import org.example.generate.Generate_World;
 import org.example.math.Vector3f;
@@ -10,8 +12,8 @@ import org.lwjgl.glfw.GLFW;
 import java.util.HashMap;
 
 public class Camera {
-    private Vector3f position, rotation;
-    private float moveSpeed = 0.02f, mouseSensitivity = 0.15f, distance = 2.0f, horizontalAngle = 0, verticalAngle = 0;
+    public  Vector3f position, rotation;
+    private float moveSpeed = 0.1f, mouseSensitivity = 0.15f, distance = 2.0f, horizontalAngle = 0, verticalAngle = 0;
     public   static double oldMouseX = 0, oldMouseY = 0, newMouseX, newMouseY;
 
     public Camera(Vector3f position, Vector3f rotation) {
@@ -27,11 +29,11 @@ public class Camera {
         float z = (float) Math.cos(Math.toRadians(rotation.getY())) * moveSpeed;
 
         if (Input.isKeyDown(GLFW.GLFW_KEY_A)){
-            Vector3f newposition = new Vector3f(position.getX()-z,position.getZ(),position.getX());
-            if(Colison.changeCollision(newposition)){
+            Vector3f newposition = new Vector3f(position.getX()-z,position.getY(),position.getZ()+x);
+           if(Colison.changeCollision(newposition)){
                 position = Vector3f.add(position, new Vector3f(-z, 0, x));
 
-            }
+           }
 
         }
         if (Input.isKeyDown(GLFW.GLFW_KEY_D)){
@@ -44,25 +46,24 @@ public class Camera {
         }
         if (Input.isKeyDown(GLFW.GLFW_KEY_W)){
             Vector3f newposition = new Vector3f(position.getX()-x,position.getY(),position.getZ()-z);
-            if(Colison.changeCollision(newposition)){
+        if(Colison.changeCollision(newposition)){
                 position = Vector3f.add(position, new Vector3f(-x, 0, -z));
-            }
+          }
 
 
         }
         if (Input.isKeyDown(GLFW.GLFW_KEY_S)){
-            Vector3f newposition = new Vector3f(position.getX()+x,position.getY(),position.getZ()+z);
-            if(Colison.changeCollision(newposition)){
+            Vector3f newposition = new Vector3f(position.getX()+x,position.getY(),position.getZ()+z);if(Colison.changeCollision(newposition)){
                 position = Vector3f.add(position, new Vector3f(x, 0, z));
 
-            }
+        }
 
         }
         if (Input.isKeyDown(GLFW.GLFW_KEY_SPACE)){
             Vector3f newposition = new Vector3f(position.getX(),position.getY()+moveSpeed,position.getZ());
             if(Colison.changeCollision(newposition)){
                 position = Vector3f.add(position, new Vector3f(0, moveSpeed, 0));
-            }
+           }
 
 
 
@@ -70,9 +71,30 @@ public class Camera {
         if (Input.isKeyDown(GLFW.GLFW_KEY_LEFT_SHIFT)){
             Vector3f newposition = new Vector3f(position.getX(),position.getY()-moveSpeed,position.getZ());
             if(Colison.changeCollision(newposition)){
-                position = Vector3f.add(position, new Vector3f(0, -moveSpeed, 0));
-            }
+                position = Vector3f.add(position, new Vector3f(0, -moveSpeed, 0));}
 
+        }
+        if (Input.isButtonDown(GLFW.GLFW_MOUSE_BUTTON_LEFT)){
+            System.out.println("hh");
+            Generate_World.flat_WordX.get(20).get(25).put(2,null);
+
+            //  NPC.checkRayHitsBlock();
+        }
+        if (Input.isButtonDown(GLFW.GLFW_MOUSE_BUTTON_RIGHT)){
+            int newX = (int) (position.getX());
+            int newY = (int)    (position.getY());
+            int newZ = (int) (position.getZ());
+            if(newX<0 && newZ<0){
+                newX--;
+                newZ--;
+
+            } else if (newX<0 && newZ>0) {
+                newX--;
+            }
+            else if (newX >0  && newZ<0) {
+                newZ--;
+            }
+           Generate_World.flat_WordX.get(newX+1).get(newZ).put(newY,new GameObject(new Vector3f(newX+1, newY, newZ), new Vector3f(0f, 0f, 0f), new Vector3f(1f, 1f, 1f), Main.mesh));
         }
 
 
@@ -84,11 +106,17 @@ public class Camera {
         oldMouseX = newMouseX;
         oldMouseY = newMouseY;
     }
-    boolean isBlock(Vector3f vector3f){
-       Vector3f bloskColison = new Vector3f(vector3f.getX(),vector3f.getY(),vector3f.getZ());
-       HashMap<Integer, HashMap<Integer, GameObject>> D2hash = Generate_World.flat_WordX.get(bloskColison.getX());
-       return false;
-        }
+    public  Vector3f getCameraDirection() {
+        float pitch = (float) Math.toRadians(rotation.getX());
+        float yaw = (float) Math.toRadians(rotation.getY());
+
+        Vector3f direction = new Vector3f(0,0,0);
+        direction.setX((float) (Math.cos(pitch) * Math.sin(yaw)));
+        direction.setY((float) Math.sin(pitch));
+        direction.setZ((float) (Math.cos(pitch) * Math.cos(yaw)));
+        return direction;
+    }
+
     public void update(GameObject object) {
         newMouseX = Input.getMouseX();
         newMouseY = Input.getMouseY();

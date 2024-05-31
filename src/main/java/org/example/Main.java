@@ -15,12 +15,73 @@ import org.example.graphics.Shader;
 import static org.lwjgl.glfw.GLFW.*;
 import static org.lwjgl.opengl.ARBVertexArrayObject.glGenVertexArrays;
 
-public class Main {
-    Shader shaders = new Shader("C:\\Users\\User\\Desktop\\Minecraft\\resources\\shaders\\mainVertex.glsl", "C:\\Users\\User\\Desktop\\Minecraft\\resources\\shaders\\mainFragment.glsl");
+public class Main {    Shader shaders = new Shader("C:\\Users\\User\\Desktop\\Minecraft\\resources\\shaders\\mainVertex.glsl", "C:\\Users\\User\\Desktop\\Minecraft\\resources\\shaders\\mainFragment.glsl");
 
 
     //public GameObject gameObject = new GameObject()
-    public Mesh mesh = new Mesh(new Vertex[]{
+    public static Mesh mesh = new Mesh(new Vertex[]{
+            //Back face
+            new Vertex(new Vector3f(0.0f, 1.0f, 0.0f), new Vector2f(0.0f, 0.0f)),
+            new Vertex(new Vector3f(0.0f, 0.0f, 0.0f), new Vector2f(0.0f, 1.0f)),
+            new Vertex(new Vector3f(1.0f, 0.0f, 0.0f), new Vector2f(1.0f, 1.0f)),
+            new Vertex(new Vector3f(1.0f, 1.0f, 0.0f), new Vector2f(1.0f, 0.0f)),
+
+            // Front face
+            new Vertex(new Vector3f(0.0f, 1.0f, 1.0f), new Vector2f(0.0f, 0.0f)),
+            new Vertex(new Vector3f(0.0f, 0.0f, 1.0f), new Vector2f(0.0f, 1.0f)),
+            new Vertex(new Vector3f(1.0f, 0.0f, 1.0f), new Vector2f(1.0f, 1.0f)),
+            new Vertex(new Vector3f(1.0f, 1.0f, 1.0f), new Vector2f(1.0f, 0.0f)),
+
+            // Right face
+            new Vertex(new Vector3f(1.0f, 1.0f, 0.0f), new Vector2f(0.0f, 0.0f)),
+            new Vertex(new Vector3f(1.0f, 0.0f, 0.0f), new Vector2f(0.0f, 1.0f)),
+            new Vertex(new Vector3f(1.0f, 0.0f, 1.0f), new Vector2f(1.0f, 1.0f)),
+            new Vertex(new Vector3f(1.0f, 1.0f, 1.0f), new Vector2f(1.0f, 0.0f)),
+
+            // Left face
+            new Vertex(new Vector3f(0.0f, 1.0f, 0.0f), new Vector2f(0.0f, 0.0f)),
+            new Vertex(new Vector3f(0.0f, 0.0f, 0.0f), new Vector2f(0.0f, 1.0f)),
+            new Vertex(new Vector3f(0.0f, 0.0f, 1.0f), new Vector2f(1.0f, 1.0f)),
+            new Vertex(new Vector3f(0.0f, 1.0f, 1.0f), new Vector2f(1.0f, 0.0f)),
+
+            // Top face
+            new Vertex(new Vector3f(0.0f, 1.0f, 1.0f), new Vector2f(0.0f, 0.0f)),
+            new Vertex(new Vector3f(0.0f, 1.0f, 0.0f), new Vector2f(0.0f, 1.0f)),
+            new Vertex(new Vector3f(1.0f, 1.0f, 0.0f), new Vector2f(1.0f, 1.0f)),
+            new Vertex(new Vector3f(1.0f, 1.0f, 1.0f), new Vector2f(1.0f, 0.0f)),
+
+            // Bottom face
+            new Vertex(new Vector3f(0.0f, 0.0f, 1.0f), new Vector2f(0.0f, 0.0f)),
+            new Vertex(new Vector3f(0.0f, 0.0f, 0.0f), new Vector2f(0.0f, 1.0f)),
+            new Vertex(new Vector3f(1.0f, 0.0f, 0.0f), new Vector2f(1.0f, 1.0f)),
+            new Vertex(new Vector3f(1.0f, 0.0f, 1.0f), new Vector2f(1.0f, 0.0f))
+    }, new int[]{
+            //Back face
+            0, 1, 3,
+            3, 1, 2,
+
+            //Front face
+            4, 5, 7,
+            7, 5, 6,
+
+            //Right face
+            8, 9, 11,
+            11, 9, 10,
+
+            //Left face
+            12, 13, 15,
+            15, 13, 14,
+
+            //Top face
+            16, 17, 19,
+            19, 17, 18,
+
+            //Bottom face
+            20, 21, 23,
+            23, 21, 22
+    }, new Material("C:\\Users\\User\\Desktop\\Minecraft\\resources\\texture\\stone.png"));
+
+    public  static Mesh mesh2 = new Mesh(new Vertex[]{
             //Back face
             new Vertex(new Vector3f(-0.5f, 0.5f, -0.5f), new Vector2f(0.0f, 0.0f)),
             new Vertex(new Vector3f(-0.5f, -0.5f, -0.5f), new Vector2f(0.0f, 1.0f)),
@@ -80,13 +141,12 @@ public class Main {
             //Bottom face
             20, 21, 23,
             23, 21, 22
-    }, new Material("C:\\Users\\User\\Desktop\\Minecraft\\resources\\texture\\stone.png"));
+    }, new Material("C:\\Users\\User\\Desktop\\Minecraft\\resources\\texture\\t2.png"));
 
-
-    public Camera camera = new Camera(new Vector3f(1, 2, 1f), new Vector3f(0, 0, 0));
+    public Camera camera = new Camera(new Vector3f(0, 1, 0f), new Vector3f(0, 0, 0));
     public Renderer renderer;
-   Generate_World generateWorld = new Generate_World((int)camera.getPosition().getX(),(int)camera.getPosition().getY(),(int)camera.getPosition().getZ(),mesh);
-    Window window = new Window(1600, 1000, "Nasza gra");
+    Generate_World generateWorld = new Generate_World((int)camera.getPosition().getX(),(int)camera.getPosition().getY(),(int)camera.getPosition().getZ(),mesh,mesh2);
+    Window window = new Window(800, 800, "Nasza gra");
 
     public void run() {
 
@@ -98,11 +158,12 @@ public class Main {
         mesh.create();
         shaders.create();
 
-
+        Vector3f vector3f = new Vector3f(0,0,0);
         while (!window.shouldClose()) {
             update();
             render();
-            System.out.println(camera.getPosition().getX());
+            // vector3f = camera.getCameraDirection();
+            //System.out.println(vector3f.getX()+" " + vector3f.getZ() + " " + vector3f.getY());
             if (Input.isKeyDown(GLFW_KEY_ESCAPE))
                 return;
 
@@ -125,5 +186,6 @@ public class Main {
     public static void main(String[] args) {
         new Main().run();
     }
+
 
 }

@@ -88,7 +88,7 @@ public class Window {
         GLFW.glfwPollEvents();
         frames++;
         if (System.currentTimeMillis() > time + 1000) {
-            GLFW.glfwSetWindowTitle(window, title + " | FPS: " + frames+ " "+camera.getPosition().getX()+" x " );
+            GLFW.glfwSetWindowTitle(window, title + " | FPS: " + frames+ "         " + camera.getPosition().getX() + " X  " + camera.getPosition().getY() + " Y " + camera.getPosition().getZ() + " Z " );
             time = System.currentTimeMillis();
             frames = 0;
         }

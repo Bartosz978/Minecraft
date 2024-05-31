@@ -1,44 +1,31 @@
 package org.example.IO;
 
+import org.example.generate.Generate_World;
+import org.example.math.Vector3f;
 import org.example.object.Camera;
+import org.example.object.GameObject;
 
 public class NPC {
-    public static int North = 0;
-    public static int East = 0;
-    public static int South = 0;
-    public static int West = 0;
-    private int distance = 6;
+private  static int distance=5;
 
-    public void direction(){
 
-        if(Camera.newMouseX > Camera.oldMouseX ){
-            North = 0;
-            East = 1;
-            South = 0;
-            West = 0;
+    public static boolean checkRayHitsBlock() {
 
-        } else if (Camera.newMouseX < Camera.oldMouseX ) {
-            North = 0;
-            East = 0;
-            South = 0;
-            West = 1;
-        } else if (Camera.newMouseY > Camera.oldMouseY ) {
-            North = 1;
-            East = 0;
-            South = 0;
-            West = 0;
+      //  Vector3f currentPos = new Vector3f(Camera.position.getX(),Camera.position.getY(),Camera.position.getZ());
+ //   int x = (int)currentPos.getX();
+ //   int z = (int) currentPos.getZ();
+  //  int y = (int)currentPos.getY();
+      //  Generate_World.flat_WordX.get(x+1).get(z).put(y,null);
+     //   Generate_World.flat_WordX.get(x).get(z).remove(y);
 
-        } else if (Camera.newMouseY < Camera.oldMouseY ) {
-            North = 0;
-            East = 0;
-            South = 1;
-            West = 0;
-            
-        }
-    }
-    public void destroyBlock(){
 
+            return false; // Promień nie trafia w żaden blok
     }
 
 
 }
+
+
+
+
+
