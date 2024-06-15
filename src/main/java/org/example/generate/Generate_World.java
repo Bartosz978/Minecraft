@@ -1,5 +1,7 @@
 package org.example.generate;
 
+import org.example.Texture.BLOCK;
+import org.example.Texture.Texture;
 import org.example.graphics.Mesh;
 import org.example.graphics.Renderer;
 import org.example.math.Vector3f;
@@ -7,36 +9,58 @@ import org.example.object.Camera;
 import org.example.object.GameObject;
 
 import java.util.HashMap;
+import java.util.Random;
 
 public class Generate_World {
-    int Test = 1000;
+    /**
+     * Perlin Noise wporzłrzedne
+     */
+    private  static  int Yfinal;
+    private static final int offset = 123;
+    private final double   increment = 0.05f;
+        NoiseGenerator noiseGenerator = new NoiseGenerator(offset);
+    private final int MaxHeight = 40;
+
+
+    int Test = 10000;
+    private  final int DistanceMap = 500;
     private int box = 15;
     private int X, Y, Z;
-    private int Ymapy = 40;
     private Mesh mesh;
-    private Mesh mesh2;
+
     public static HashMap<Integer, HashMap<Integer, HashMap<Integer, GameObject>>> flat_WordX = new HashMap<>();
-    public boolean gene = true;
-    public Generate_World(int x, int y, int z, Mesh mesh,Mesh mesh1) {
+
+
+    public Generate_World(int x, int y, int z, Mesh mesh) {
+
         this.mesh = mesh;
         X = x;
         Y = y;
         Z = z;
-this.mesh2 = mesh1;
-        for (int i = -Test / 2; i < Test / 2; i++) {
+
+        for (int i = Test - DistanceMap; i < Test + DistanceMap ; i++) {
             HashMap<Integer, HashMap<Integer, GameObject>> flat_wordZ = new HashMap<>();
-            for (int j = -Test / 2; j < Test / 2; j++) {
+            for (int j = Test - DistanceMap; j < Test  + DistanceMap; j++) {
                 HashMap<Integer, GameObject> flat_wordY = new HashMap<>();
-                for (int g = 0; g < Ymapy; g++) {
-                    if (g == 0) {
-                        GameObject gameObject = new GameObject(new Vector3f(i, g, j), new Vector3f(0, 0, 0), new Vector3f(1, 1, 1), mesh);
-                        flat_wordY.put(g, gameObject);
+                for (int g = 0; g < MaxHeight; g++) {
+                    GameObject gameObject;
+                    if(g==0) {
+                        Yfinal = NoiseHeightReturn(i,j);
+                        gameObject = new GameObject(new Vector3f(i, Yfinal, j), new Vector3f(0, 0, 0), new Vector3f(1, 1, 1), Texture.returnMesh(BLOCK.GRASS));
+
+                    }else{
+                        Yfinal--;
+                        gameObject = new GameObject(new Vector3f(i, Yfinal, j), new Vector3f(0, 0, 0), new Vector3f(1, 1, 1), Texture.returnMesh(BLOCK.STONE));
+
                     }
+                    flat_wordY.put( Yfinal, gameObject);
                 }
                 flat_wordZ.put(j, flat_wordY);
             }
             flat_WordX.put(i, flat_wordZ);
         }
+        Tree tree = new Tree(Test,DistanceMap,box,MaxHeight);
+        tree.genereteTree();
     }
 
 
@@ -88,10 +112,13 @@ this.mesh2 = mesh1;
         Z = z;
     }
 
-
-    public void render_space() {
-
+    private int NoiseHeightReturn(int x , int y){
+        double returnY = noiseGenerator.noise(x * increment,y * increment) * MaxHeight;
+        return (int)returnY;
     }
+
+
+
 
 }
 

@@ -1,37 +1,63 @@
 package org.example.generate;
 
 import org.example.math.Vector3f;
-import org.example.object.Camera;
 import org.example.object.GameObject;
-
-import java.util.HashMap;
 
 public class Colison {
 
-    public static boolean changeCollision(Vector3f vector3f) {
-        int newX = (int) (vector3f.getX());
-        int newY = (int)    (vector3f.getY());
-        int newZ = (int) (vector3f.getZ());
-       if(newX<0 && newZ<0){
-           newX--;
-           newZ--;
+    private static float distanceBlock = 0.2f;
 
-       } else if (newX<0 && newZ>0) {
-           newX--;
-       }
-     else if (newX >0  && newZ<0) {
-        newZ--;
-    }
-        System.out.println(newX + " "+ newZ + " " + newY);
+
+    public static boolean changeCollision(Vector3f newpPosition,Vector3f oldPosition) {
+
+
+        Vector3f colliosnVector = new Vector3f(0,0,0);
+        //float distanceBlockX = (float) Math.sin(Math.toRadians(rotation.getY())) * distanceBlock;
+       // float distanceBlockZ  = (float) Math.sin(Math.toRadians(rotation.getY())) * distanceBlock;
+
+        int newX = (int) (newpPosition.getX());
+        int newY = (int)    (newpPosition.getY());
+        int newZ = (int) (newpPosition.getZ());
+
+        int X = 0,Y = 0,Z = 0;
+        if(newpPosition.getX() > oldPosition.getX()){
+
+            X = 1;
+        }else {
+
+        }
+        if(newpPosition.getY() > oldPosition.getY()){
+            Y = 1;
+        }
+        else {
+
+        }
+        if(newpPosition.getZ() > oldPosition.getZ()){
+            Z = 1;
+        }
+        else {
+
+        }
+
         GameObject set1 = Generate_World.flat_WordX.get(newX).get(newZ).get(newY);
-        //GameObject set2 = Generate_World.flat_WordX.get(newX).get(newZ).get(newY+1);
             if (set1 != null ) {
-                return false; // Kolizja, blok jest zajęty
+                return false;
             }
 
-        return true; // Brak kolizji, blok jest wolny
+        return true;
     }
 
 
-
+/** gdyby uklad byl od 0.0
+ *     if(newX<0 && newZ<0){
+ *            newX--;
+ *            newZ--;
+ *
+ *        } else if (newX<0 && newZ>0) {
+ *            newX--;
+ *        }
+ *      else if (newX >0  && newZ<0) {
+ *         newZ--;
+ *     }
+ */
 }

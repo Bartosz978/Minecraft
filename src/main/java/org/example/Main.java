@@ -1,6 +1,7 @@
 package org.example;
 
 import org.example.IO.Input;
+import org.example.Texture.Texture;
 import org.example.generate.Generate_World;
 import org.example.graphics.Mesh;
 import org.example.graphics.Renderer;
@@ -79,74 +80,13 @@ public class Main {    Shader shaders = new Shader("C:\\Users\\User\\Desktop\\Mi
             //Bottom face
             20, 21, 23,
             23, 21, 22
-    }, new Material("C:\\Users\\User\\Desktop\\Minecraft\\resources\\texture\\stone.png"));
+    }, new Material("C:\\Users\\User\\Desktop\\Minecraft\\resources\\texture\\grass.png"));
 
-    public  static Mesh mesh2 = new Mesh(new Vertex[]{
-            //Back face
-            new Vertex(new Vector3f(-0.5f, 0.5f, -0.5f), new Vector2f(0.0f, 0.0f)),
-            new Vertex(new Vector3f(-0.5f, -0.5f, -0.5f), new Vector2f(0.0f, 1.0f)),
-            new Vertex(new Vector3f(0.5f, -0.5f, -0.5f), new Vector2f(1.0f, 1.0f)),
-            new Vertex(new Vector3f(0.5f, 0.5f, -0.5f), new Vector2f(1.0f, 0.0f)),
 
-            //Front face
-            new Vertex(new Vector3f(-0.5f, 0.5f, 0.5f), new Vector2f(0.0f, 0.0f)),
-            new Vertex(new Vector3f(-0.5f, -0.5f, 0.5f), new Vector2f(0.0f, 1.0f)),
-            new Vertex(new Vector3f(0.5f, -0.5f, 0.5f), new Vector2f(1.0f, 1.0f)),
-            new Vertex(new Vector3f(0.5f, 0.5f, 0.5f), new Vector2f(1.0f, 0.0f)),
-
-            //Right face
-            new Vertex(new Vector3f(0.5f, 0.5f, -0.5f), new Vector2f(0.0f, 0.0f)),
-            new Vertex(new Vector3f(0.5f, -0.5f, -0.5f), new Vector2f(0.0f, 1.0f)),
-            new Vertex(new Vector3f(0.5f, -0.5f, 0.5f), new Vector2f(1.0f, 1.0f)),
-            new Vertex(new Vector3f(0.5f, 0.5f, 0.5f), new Vector2f(1.0f, 0.0f)),
-
-            //Left face
-            new Vertex(new Vector3f(-0.5f, 0.5f, -0.5f), new Vector2f(0.0f, 0.0f)),
-            new Vertex(new Vector3f(-0.5f, -0.5f, -0.5f), new Vector2f(0.0f, 1.0f)),
-            new Vertex(new Vector3f(-0.5f, -0.5f, 0.5f), new Vector2f(1.0f, 1.0f)),
-            new Vertex(new Vector3f(-0.5f, 0.5f, 0.5f), new Vector2f(1.0f, 0.0f)),
-
-            //Top face
-            new Vertex(new Vector3f(-0.5f, 0.5f, 0.5f), new Vector2f(0.0f, 0.0f)),
-            new Vertex(new Vector3f(-0.5f, 0.5f, -0.5f), new Vector2f(0.0f, 1.0f)),
-            new Vertex(new Vector3f(0.5f, 0.5f, -0.5f), new Vector2f(1.0f, 1.0f)),
-            new Vertex(new Vector3f(0.5f, 0.5f, 0.5f), new Vector2f(1.0f, 0.0f)),
-
-            //Bottom face
-            new Vertex(new Vector3f(-0.5f, -0.5f, 0.5f), new Vector2f(0.0f, 0.0f)),
-            new Vertex(new Vector3f(-0.5f, -0.5f, -0.5f), new Vector2f(0.0f, 1.0f)),
-            new Vertex(new Vector3f(0.5f, -0.5f, -0.5f), new Vector2f(1.0f, 1.0f)),
-            new Vertex(new Vector3f(0.5f, -0.5f, 0.5f), new Vector2f(1.0f, 0.0f)),
-    }, new int[]{
-            //Back face
-            0, 1, 3,
-            3, 1, 2,
-
-            //Front face
-            4, 5, 7,
-            7, 5, 6,
-
-            //Right face
-            8, 9, 11,
-            11, 9, 10,
-
-            //Left face
-            12, 13, 15,
-            15, 13, 14,
-
-            //Top face
-            16, 17, 19,
-            19, 17, 18,
-
-            //Bottom face
-            20, 21, 23,
-            23, 21, 22
-    }, new Material("C:\\Users\\User\\Desktop\\Minecraft\\resources\\texture\\t2.png"));
-
-    public Camera camera = new Camera(new Vector3f(0, 1, 0f), new Vector3f(0, 0, 0));
+    public Camera camera = new Camera(new Vector3f(10000, 50, 10000f), new Vector3f(0, 0, 0));
     public Renderer renderer;
-    Generate_World generateWorld = new Generate_World((int)camera.getPosition().getX(),(int)camera.getPosition().getY(),(int)camera.getPosition().getZ(),mesh,mesh2);
-    Window window = new Window(800, 800, "Nasza gra");
+    Generate_World generateWorld = new Generate_World((int)camera.getPosition().getX(),(int)camera.getPosition().getY(),(int)camera.getPosition().getZ(),mesh);
+    Window window = new Window(1600, 1000, "Nasza gra");
 
     public void run() {
 
@@ -154,16 +94,14 @@ public class Main {    Shader shaders = new Shader("C:\\Users\\User\\Desktop\\Mi
         renderer = new Renderer(shaders, window);
         window.setBackgroundColor(0, 10, 10);
         window.create();
-
+       Texture.InitAlltexture();
         mesh.create();
         shaders.create();
 
-        Vector3f vector3f = new Vector3f(0,0,0);
         while (!window.shouldClose()) {
             update();
             render();
-            // vector3f = camera.getCameraDirection();
-            //System.out.println(vector3f.getX()+" " + vector3f.getZ() + " " + vector3f.getY());
+
             if (Input.isKeyDown(GLFW_KEY_ESCAPE))
                 return;
 
@@ -189,3 +127,66 @@ public class Main {    Shader shaders = new Shader("C:\\Users\\User\\Desktop\\Mi
 
 
 }
+/**
+ *  public  static Mesh mesh2 = new Mesh(new Vertex[]{
+ *             //Back face
+ *             new Vertex(new Vector3f(-0.5f, 0.5f, -0.5f), new Vector2f(0.75f, 0.25f)),
+ *             new Vertex(new Vector3f(-0.5f, -0.5f, -0.5f), new Vector2f(0.75f, 0.5f)),
+ *             new Vertex(new Vector3f(0.5f, -0.5f, -0.5f), new Vector2f(1.0f, 0.5f)),
+ *             new Vertex(new Vector3f(0.5f, 0.5f, -0.5f), new Vector2f(1.0f, 0.25f)),
+ *
+ *             //Front face
+ *             new Vertex(new Vector3f(-0.5f, 0.5f, 0.5f), new Vector2f(0.0f, 0.0f)),
+ *             new Vertex(new Vector3f(-0.5f, -0.5f, 0.5f), new Vector2f(0.0f, 1.0f)),
+ *             new Vertex(new Vector3f(0.5f, -0.5f, 0.5f), new Vector2f(1.0f, 1.0f)),
+ *             new Vertex(new Vector3f(0.5f, 0.5f, 0.5f), new Vector2f(1.0f, 0.0f)),
+ *
+ *             //Right face
+ *             new Vertex(new Vector3f(0.5f, 0.5f, -0.5f), new Vector2f(0.0f, 0.0f)),
+ *             new Vertex(new Vector3f(0.5f, -0.5f, -0.5f), new Vector2f(0.0f, 1.0f)),
+ *             new Vertex(new Vector3f(0.5f, -0.5f, 0.5f), new Vector2f(1.0f, 1.0f)),
+ *             new Vertex(new Vector3f(0.5f, 0.5f, 0.5f), new Vector2f(1.0f, 0.0f)),
+ *
+ *             //Left face
+ *             new Vertex(new Vector3f(-0.5f, 0.5f, -0.5f), new Vector2f(0.0f, 0.0f)),
+ *             new Vertex(new Vector3f(-0.5f, -0.5f, -0.5f), new Vector2f(0.0f, 1.0f)),
+ *             new Vertex(new Vector3f(-0.5f, -0.5f, 0.5f), new Vector2f(1.0f, 1.0f)),
+ *             new Vertex(new Vector3f(-0.5f, 0.5f, 0.5f), new Vector2f(1.0f, 0.0f)),
+ *
+ *             //Top face
+ *             new Vertex(new Vector3f(-0.5f, 0.5f, 0.5f), new Vector2f(0.6666f, 0.0f)),
+ *             new Vertex(new Vector3f(-0.5f, 0.5f, -0.5f), new Vector2f(0.6666f, 1.0f)),
+ *             new Vertex(new Vector3f(0.5f, 0.5f, -0.5f), new Vector2f(1.0f, 1.0f)),
+ *             new Vertex(new Vector3f(0.5f, 0.5f, 0.5f), new Vector2f(1.0f, 0.0f)),
+ *
+ *             //Bottom face
+ *             new Vertex(new Vector3f(-0.5f, -0.5f, 0.5f), new Vector2f(0.0f, 0.0f)),
+ *             new Vertex(new Vector3f(-0.5f, -0.5f, -0.5f), new Vector2f(0.0f, 1.0f)),
+ *             new Vertex(new Vector3f(0.5f, -0.5f, -0.5f), new Vector2f(1.0f, 1.0f)),
+ *             new Vertex(new Vector3f(0.5f, -0.5f, 0.5f), new Vector2f(1.0f, 0.0f)),
+ *     }, new int[]{
+ *             //Back face
+ *             0, 1, 3,
+ *             3, 1, 2,
+ *
+ *             //Front face
+ *             4, 5, 7,
+ *             7, 5, 6,
+ *
+ *             //Right face
+ *             8, 9, 11,
+ *             11, 9, 10,
+ *
+ *             //Left face
+ *             12, 13, 15,
+ *             15, 13, 14,
+ *
+ *             //Top face
+ *             16, 17, 19,
+ *             19, 17, 18,
+ *
+ *             //Bottom face
+ *             20, 21, 23,
+ *             23, 21, 22
+ *     }, new Material("C:\\Users\\User\\Desktop\\Minecraft\\resources\\texture\\t2.png"));
+ */
