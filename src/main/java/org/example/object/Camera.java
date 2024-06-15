@@ -77,13 +77,15 @@ public class Camera {
                 position = Vector3f.add(position, new Vector3f(0, -moveSpeed, 0));}
 
         }
+        if (Input.isButtonDown(GLFW.GLFW_MOUSE_BUTTON_LEFT)){
+            printRayPoints(position,rotation,5);
 
+        }
         if (Input.isButtonDown(GLFW.GLFW_MOUSE_BUTTON_RIGHT)){
             int newX = (int) (position.getX());
             int newY = (int)    (position.getY());
             int newZ = (int) (position.getZ());
-
-           Generate_World.flat_WordX.get(newX+1).get(newZ).put(newY,new GameObject(new Vector3f(newX+1, newY, newZ), new Vector3f(0f, 0f, 0f), new Vector3f(1f, 1f, 1f), Texture.returnMesh(BLOCK.WOOD)));
+         Generate_World.flat_WordX.get(newX+1).get(newZ).put(newY,new GameObject(new Vector3f(newX+1, newY, newZ), new Vector3f(0f, 0f, 0f), new Vector3f(1f, 1f, 1f), Texture.returnMesh(BLOCK.WOOD)));
         }
 
 
@@ -105,6 +107,29 @@ public class Camera {
     public Vector3f getRotation() {
         return rotation;
     }
+
+
+
+
+    public void printRayPoints(Vector3f startPos, Vector3f direction, float length) {
+        Vector3f currentPosition = new Vector3f(startPos.getX(),startPos.getY(),startPos.getZ());
+
+        float stepSize = 0.5f;
+
+        while (currentPosition.distance(startPos) <= length) {
+            System.out.println("Position: (" + currentPosition.getX() + ", " + currentPosition.getY() + ", " + currentPosition.getZ() + ")");
+
+            currentPosition.add(new Vector3f(direction.getX(),direction.getY(),direction.getZ()).normalize().mul(stepSize));
+            int x = (int)currentPosition.getX();
+            int y = (int)currentPosition.getY();
+            int z = (int)currentPosition.getZ();
+            if(Generate_World.flat_WordX.get(x).get(z).get(y) != null){
+                Generate_World.flat_WordX.get(x).get(z).put(y,null);
+                return;
+            }
+        }
+    }
+
 }
 
 

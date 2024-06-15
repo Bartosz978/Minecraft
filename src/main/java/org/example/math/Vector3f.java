@@ -10,6 +10,8 @@ public class Vector3f {
         this.z = z;
     }
 
+
+
     public void set(float x, float y, float z) {
         this.x = x;
         this.y = y;
@@ -48,7 +50,12 @@ public class Vector3f {
     public static Vector3f add(Vector3f vector1, Vector3f vector2) {
         return new Vector3f(vector1.getX() + vector2.getX(), vector1.getY() + vector2.getY(), vector1.getZ() + vector2.getZ());
     }
-
+    public Vector3f add(Vector3f other) {
+        this.x += other.x;
+        this.y += other.y;
+        this.z += other.z;
+        return this;
+    }
     public static Vector3f subtract(Vector3f vector1, Vector3f vector2) {
         return new Vector3f(vector1.getX() - vector2.getX(), vector1.getY() - vector2.getY(), vector1.getZ() - vector2.getZ());
     }
@@ -71,6 +78,27 @@ public class Vector3f {
 
     public static float dot(Vector3f vector1, Vector3f vector2) {
         return vector1.getX() * vector2.getX() + vector1.getY() * vector2.getY() + vector1.getZ() * vector2.getZ();
+    }
+    public Vector3f normalize() {
+        float length = (float) Math.sqrt(x * x + y * y + z * z);
+        if (length != 0) {
+            x /= length;
+            y /= length;
+            z /= length;
+        }
+        return this;
+    }
+    public Vector3f mul(float scalar) {
+        this.x *= scalar;
+        this.y *= scalar;
+        this.z *= scalar;
+        return this;
+    }
+    public float distance(Vector3f other) {
+        float dx = this.x - other.x;
+        float dy = this.y - other.y;
+        float dz = this.z - other.z;
+        return (float) Math.sqrt(dx * dx + dy * dy + dz * dz);
     }
 
     @Override

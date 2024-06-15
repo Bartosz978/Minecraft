@@ -2,8 +2,7 @@ package org.example.object;
 
 import org.example.graphics.Mesh;
 import org.example.math.Vector3f;
-import org.lwjglx.util.vector.Matrix4f;
-import org.lwjglx.util.vector.Vector4f;
+
 
 public class GameObject {
     private Vector3f position, rotation, scale;

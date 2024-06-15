@@ -2,14 +2,12 @@ package org.example.generate;
 
 import org.example.Texture.BLOCK;
 import org.example.Texture.Texture;
-import org.example.graphics.Mesh;
 import org.example.graphics.Renderer;
 import org.example.math.Vector3f;
 import org.example.object.Camera;
 import org.example.object.GameObject;
 
 import java.util.HashMap;
-import java.util.Random;
 
 public class Generate_World {
     /**
@@ -19,21 +17,21 @@ public class Generate_World {
     private static final int offset = 123;
     private final double   increment = 0.05f;
         NoiseGenerator noiseGenerator = new NoiseGenerator(offset);
-    private final int MaxHeight = 40;
+    private final int MaxHeight = 30;
 
 
     int Test = 10000;
     private  final int DistanceMap = 500;
     private int box = 15;
     private int X, Y, Z;
-    private Mesh mesh;
+
 
     public static HashMap<Integer, HashMap<Integer, HashMap<Integer, GameObject>>> flat_WordX = new HashMap<>();
 
 
-    public Generate_World(int x, int y, int z, Mesh mesh) {
+    public Generate_World(int x, int y, int z) {
 
-        this.mesh = mesh;
+
         X = x;
         Y = y;
         Z = z;

@@ -39,7 +39,8 @@ public class Colison {
 
         }
 
-        GameObject set1 = Generate_World.flat_WordX.get(newX).get(newZ).get(newY);
+            GameObject set1 = Generate_World.flat_WordX.get(newX).get(newZ).get(newY);
+
             if (set1 != null ) {
                 return false;
             }

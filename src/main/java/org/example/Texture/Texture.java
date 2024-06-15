@@ -15,7 +15,7 @@ public class Texture {
 
 
     private static String[] PathArray = {
-            pathResource + "grass.png",pathResource + "stone.png",pathResource + "wood.jpeg",pathResource + "leaves.jpeg"
+            pathResource + "grass.jpeg",pathResource + "stone.png",pathResource + "wood.jpeg",pathResource + "leaves.jpeg"
 
     };
 
@@ -173,7 +173,6 @@ public class Texture {
 
             if(ArrayActive[x] != 0) {
                 E.create();
-                System.out.println("dupa");
             }
             x++;
         }
